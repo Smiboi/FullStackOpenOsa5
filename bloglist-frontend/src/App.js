@@ -40,17 +40,18 @@ const App = () => {
       //   author: newAuthor,
       //   url: newUrl
       // }
-      blogFormRef.current.toggleVisibility()
-      blogService
-        .create(blogObject)
-        .then(returnedBlog => {
-          setBlogs(blogs.concat(returnedBlog))
-        })
-      
-      setInfoMessage(`a new blog ${blogObject.title} by ${blogObject.author} added`)
-      setTimeout(() => {
-        setInfoMessage(null)
-      }, 5000)
+    blogFormRef.current.toggleVisibility()
+
+    blogService
+      .create(blogObject)
+      .then(returnedBlog => {
+        setBlogs(blogs.concat(returnedBlog))
+      })
+    
+    setInfoMessage(`a new blog ${blogObject.title} by ${blogObject.author} added`)
+    setTimeout(() => {
+      setInfoMessage(null)
+    }, 5000)
     // } catch (exception) {
     //   setErrorMessage('invalid input')
     //   setTimeout(() => {
@@ -109,6 +110,28 @@ const App = () => {
     // }
   }
 
+  const addLike = async (id) => {
+    const blog = blogs.find(b => b.id === id)
+    const changedBlog = {
+      title: blog.title,
+      author: blog.author,
+      url: blog.url,
+      likes: blog.likes + 1,
+      user: blog.user.id,
+    }
+
+    console.log('changedBlog:', changedBlog)
+    // console.log('blogs before:', blogs)
+
+    const returnedBlog = await blogService.update(id, changedBlog)
+    setBlogs(blogs.map(blog => blog.id !== id ? blog : returnedBlog))
+    // console.log('blogs after:', blogs)
+    // blogService
+    //   .update(id, changedBlog).then(returnedBlog => {
+    //     setBlogs(blogs.map(blog => blog.id !== id ? blog : returnedBlog))
+    //   })
+  }
+
   const blogFormRef = useRef()
 
   if (user === null) {
@@ -164,7 +187,11 @@ const App = () => {
 
       <h2>blog list</h2>
       {blogs.map(blog =>
-        <Blog key={blog.id} blog={blog} />
+        <Blog
+          key={blog.id}
+          blog={blog}
+          addLike={() => addLike(blog.id)}
+        />
       )}
     </div>
   )

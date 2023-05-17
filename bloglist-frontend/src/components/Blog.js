@@ -1,6 +1,6 @@
 import { useState } from "react"
 
-const Blog = ({ blog }) => {
+const Blog = ({ blog, addLike }) => {
   const [viewInfo, toggleInfo] = useState(false)
   const label = viewInfo
     ? 'hide'
@@ -9,13 +9,16 @@ const Blog = ({ blog }) => {
     <div className="blog">
       {blog.title} by {blog.author}
       <button onClick={() => toggleInfo(!viewInfo)}>{label}</button>
-      <div style={{display: viewInfo ? '' : 'none'}}>
-        <div>{blog.url}</div>
+      { viewInfo &&
         <div>
-          likes: {blog.likes}
-          <button>like</button>
+          <div>{blog.url}</div>
+          <div>
+            likes: {blog.likes}
+            <button onClick={addLike}>like</button>
+          </div>
+          <div>{blog.user.name}</div>
         </div>
-      </div>
+      }
     </div>
   )
 }
