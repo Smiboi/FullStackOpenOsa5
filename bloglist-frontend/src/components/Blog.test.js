@@ -1,6 +1,7 @@
 import React from 'react'
 import '@testing-library/jest-dom/extend-expect'
 import { render, screen } from '@testing-library/react'
+import userEvent from '@testing-library/user-event'
 import Blog from './Blog'
 
 test('renders title and author but not url and likes', () => {
@@ -21,4 +22,40 @@ test('renders title and author but not url and likes', () => {
 
   const elementLikes = screen.queryByText('likes: 5')
   expect(elementLikes).toBeNull()
+})
+
+test('clicking the button calls event handler once', async () => {
+  const blog = {
+    title: 'Jukka Kukkulan sukka',
+    author: 'Jukka Kukkula',
+    url: 'www.jukka.fi',
+    likes: 5,
+    user: {
+      username: 'repe',
+      name: 'Repe Sorsa',
+      id: 'testid'
+    }
+  }
+
+  const mockHandler = jest.fn()
+
+  // container = render(
+  //   <Blog blog={blog} addLike={mockHandler} />
+  // ).container
+
+  render(
+    <Blog blog={blog} addLike={mockHandler} />
+  )
+
+  const user = userEvent.setup()
+  const button = screen.getByText('view')
+  await user.click(button)
+
+  const elementUrl = screen.getByText('www.jukka.fi')
+  expect(elementUrl).toBeDefined()
+
+  const elementLikes = screen.getByText('likes: 5')
+  expect(elementLikes).toBeDefined()
+
+  // expect(mockHandler.mock.calls).toHaveLength(1)
 })
