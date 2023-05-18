@@ -1,6 +1,6 @@
 import { useState } from "react"
 
-const Blog = ({ blog, addLike }) => {
+const Blog = ({ blog, addLike, removeBlog }) => {
   const [viewInfo, toggleInfo] = useState(false)
   const label = viewInfo
     ? 'hide'
@@ -17,6 +17,7 @@ const Blog = ({ blog, addLike }) => {
             <button onClick={addLike}>like</button>
           </div>
           <div>{blog.user.name}</div>
+          <button onClick={() => removeBlog(blog)}>remove</button>
         </div>
       }
     </div>

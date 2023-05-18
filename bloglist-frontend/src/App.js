@@ -132,6 +132,16 @@ const App = () => {
     //   })
   }
 
+  const removeBlog = (blog) => {
+    if (window.confirm(`Remove blog ${blog.title} by ${blog.author}`)) {
+      blogService
+        .remove(blog.id, blogService.setToken(user.token))
+        .then(() => {
+          setBlogs(blogs.filter(single_blog => single_blog.id !== blog.id))
+        })
+    }
+  }
+
   const blogFormRef = useRef()
 
   if (user === null) {
@@ -191,6 +201,7 @@ const App = () => {
           key={blog.id}
           blog={blog}
           addLike={() => addLike(blog.id)}
+          removeBlog={removeBlog}
         />
       )}
     </div>
