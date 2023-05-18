@@ -1,14 +1,13 @@
 const InfoNotification = ({ message }) => {
-    if (message === null) {
-      return null
-    }
-  
-    return (
-      <div className="info">
-        {message}
-      </div>
-    )
+  if (message === null) {
+    return null
   }
-  
-  export default InfoNotification
-  
+
+  return (
+    <div className="info">
+      {message}
+    </div>
+  )
+}
+
+export default InfoNotification

@@ -9,19 +9,19 @@ import loginService from './services/login'
 
 const App = () => {
   const [blogs, setBlogs] = useState([])
-  const [newTitle, setNewTitle] = useState('')
-  const [newAuthor, setNewAuthor] = useState('')
-  const [newUrl, setNewUrl] = useState('')
+  // const [newTitle, setNewTitle] = useState('')
+  // const [newAuthor, setNewAuthor] = useState('')
+  // const [newUrl, setNewUrl] = useState('')
   const [infoMessage, setInfoMessage] = useState(null)
   const [errorMessage, setErrorMessage] = useState(null)
-  const [username, setUsername] = useState('') 
-  const [password, setPassword] = useState('') 
+  const [username, setUsername] = useState('')
+  const [password, setPassword] = useState('')
   const [user, setUser] = useState(null)
 
   useEffect(() => {
     blogService.getAll().then(blogs =>
       setBlogs( blogs )
-    )  
+    )
   }, [])
 
   useEffect(() => {
@@ -35,11 +35,11 @@ const App = () => {
 
   const addBlog = (blogObject) => {
     // try {
-      // const blogObject = {
-      //   title: newTitle,
-      //   author: newAuthor,
-      //   url: newUrl
-      // }
+    // const blogObject = {
+    //   title: newTitle,
+    //   author: newAuthor,
+    //   url: newUrl
+    // }
     blogFormRef.current.toggleVisibility()
 
     blogService
@@ -47,7 +47,7 @@ const App = () => {
       .then(returnedBlog => {
         setBlogs(blogs.concat(returnedBlog))
       })
-    
+
     setInfoMessage(`a new blog ${blogObject.title} by ${blogObject.author} added`)
     setTimeout(() => {
       setInfoMessage(null)
@@ -60,21 +60,21 @@ const App = () => {
     // }
   }
 
-  const handleTitleChange = (event) => {
-    setNewTitle(event.target.value)
-  }
+  // const handleTitleChange = (event) => {
+  //   setNewTitle(event.target.value)
+  // }
 
-  const handleAuthorChange = (event) => {
-    setNewAuthor(event.target.value)
-  }
+  // const handleAuthorChange = (event) => {
+  //   setNewAuthor(event.target.value)
+  // }
 
-  const handleUrlChange = (event) => {
-    setNewUrl(event.target.value)
-  }
+  // const handleUrlChange = (event) => {
+  //   setNewUrl(event.target.value)
+  // }
 
   const handleLogin = async (event) => {
     event.preventDefault()
-    
+
     try {
       const user = await loginService.login({
         username, password,
@@ -96,12 +96,12 @@ const App = () => {
     }
   }
 
-  const handleLogout = async (event) => {
+  const handleLogout = async (/*event*/) => {
     // try {
-      window.localStorage.removeItem('loggedBlogappUser')
-      setUser(user)
-      setUsername('')
-      setPassword('')
+    window.localStorage.removeItem('loggedBlogappUser')
+    setUser(user)
+    setUsername('')
+    setPassword('')
     // } catch (exception) {
     //   setErrorMessage('wrong credentials')
     //   setTimeout(() => {
@@ -155,7 +155,7 @@ const App = () => {
         <form onSubmit={handleLogin}>
           <div>
             username
-              <input
+            <input
               type="text"
               value={username}
               name="Username"
@@ -164,7 +164,7 @@ const App = () => {
           </div>
           <div>
             password
-              <input
+            <input
               type="password"
               value={password}
               name="Password"

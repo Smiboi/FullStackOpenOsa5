@@ -10,15 +10,15 @@ const BlogForm = ({ createBlog }) => {
     event.preventDefault()
 
     // try {
-      createBlog({
-        title: newTitle,
-        author: newAuthor,
-        url: newUrl
-      })
+    createBlog({
+      title: newTitle,
+      author: newAuthor,
+      url: newUrl
+    })
 
-      setNewTitle('')
-      setNewAuthor('')
-      setNewUrl('')
+    setNewTitle('')
+    setNewAuthor('')
+    setNewUrl('')
     // } catch (exception) {
     //   setErrorMessage('invalid input')
     //   setTimeout(() => {
@@ -36,17 +36,17 @@ const BlogForm = ({ createBlog }) => {
           <input
             value={newTitle}
             onChange={event => setNewTitle(event.target.value)}
-        />
+          />
         </div>
         <div>
-        <>author:</>
+          <>author:</>
           <input
             value={newAuthor}
             onChange={event => setNewAuthor(event.target.value)}
           />
         </div>
         <div>
-        <>url:</>
+          <>url:</>
           <input
             value={newUrl}
             onChange={event => setNewUrl(event.target.value)}
