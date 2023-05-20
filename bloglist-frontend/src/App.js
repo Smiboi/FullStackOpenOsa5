@@ -189,7 +189,7 @@ const App = () => {
       <form onSubmit={handleLogout}>
         <div>
           <>{user.name} logged in</>
-          <button type="submit">logout</button>
+          <button id="logout-button" type="submit">logout</button>
         </div>
       </form>
 

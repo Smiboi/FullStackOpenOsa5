@@ -1,12 +1,18 @@
 describe('Blog app', function() {
   beforeEach(function() {
     cy.request('POST', 'http://localhost:3003/api/testing/reset')
-    const user = {
+    const user1 = {
       name: 'Matti Meikäläinen',
       username: 'masa',
       password: 'meikä'
     }
-    cy.request('POST', 'http://localhost:3003/api/users/', user)
+    const user2 = {
+      name: 'Maija Teikäläinen',
+      username: 'maja',
+      password: 'teikä'
+    }
+    cy.request('POST', 'http://localhost:3003/api/users/', user1)
+    cy.request('POST', 'http://localhost:3003/api/users/', user2)
     cy.visit('http://localhost:3000')
   })
 
@@ -60,11 +66,20 @@ describe('Blog app', function() {
       cy.contains('Awesome blog by Jared Johnson').contains('likes: 1')
     })
 
-    // it('A blog can be deleted by its creator', function () {
-    //   cy.contains('Awesome blog by Jared Johnson').contains('view').click()
-    //   cy.contains('Awesome blog by Jared Johnson').contains('remove').click()
-    //   cy.get('html').should('not.contain', 'Awesome blog by Jared Johnson')
-    // })
+    it('A blog can be deleted by its creator', function () {
+      cy.contains('Awesome blog by Jared Johnson').contains('view').click()
+      cy.contains('Awesome blog by Jared Johnson').contains('remove').click()
+      cy.get('html').should('not.contain', 'Awesome blog by Jared Johnson')
+    })
+
+    it('A remove button of a blog cannot be seen by others than the creator', function () {
+      cy.get('#logout-button').click()
+      cy.get('#username').type('maja')
+      cy.get('#password').type('teikä')
+      cy.get('#login-button').click()
+      cy.contains('Awesome blog by Jared Johnson').contains('view').click()
+      cy.get('html').should('not.contain', 'remove')
+    })
   })
 
   describe('When logged in and there is multiple blogs in the list', function() {
