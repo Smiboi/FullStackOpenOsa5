@@ -48,7 +48,7 @@ const App = () => {
         setBlogs(blogs.concat(returnedBlog))
       })
 
-    setInfoMessage(`a new blog ${blogObject.title} by ${blogObject.author} added`)
+    setInfoMessage(`a new blog ${blogObject.title} from ${blogObject.author} added`)
     setTimeout(() => {
       setInfoMessage(null)
     }, 5000)

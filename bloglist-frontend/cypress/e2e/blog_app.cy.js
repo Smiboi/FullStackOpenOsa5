@@ -32,4 +32,21 @@ describe('Blog app', function() {
       cy.contains('wrong credentials')
     })
   })
+
+  describe('When logged in', function() {
+    beforeEach(function() {
+      cy.get('#username').type('masa')
+      cy.get('#password').type('meikä')
+      cy.get('#login-button').click()
+    })
+
+    it('A blog can be created', function() {
+      cy.contains('create new blog').click()
+      cy.get('#title').type('Hieno blogi')
+      cy.get('#author').type('Jarmo Manner')
+      cy.get('#url').type('www.jotain.fi')
+      cy.get('#create-button').click()
+      cy.contains('Hieno blogi by Jarmo Manner')
+    })
+  })
 })
