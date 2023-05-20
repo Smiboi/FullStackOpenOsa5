@@ -33,11 +33,16 @@ describe('Blog app', function() {
     })
   })
 
-  describe('When logged in', function() {
+  describe('When logged in and there is at least one blog in the list', function() {
     beforeEach(function() {
       cy.get('#username').type('masa')
       cy.get('#password').type('meikä')
       cy.get('#login-button').click()
+      cy.contains('create new blog').click()
+      cy.get('#title').type('Awesome blog')
+      cy.get('#author').type('Jared Johnson')
+      cy.get('#url').type('www.something.com')
+      cy.get('#create-button').click()
     })
 
     it('A blog can be created', function() {
@@ -47,6 +52,12 @@ describe('Blog app', function() {
       cy.get('#url').type('www.jotain.fi')
       cy.get('#create-button').click()
       cy.contains('Hieno blogi by Jarmo Manner')
+    })
+
+    it('A blog can be liked', function() {
+      cy.contains('Awesome blog by Jared Johnson').contains('view').click()
+      cy.contains('Awesome blog by Jared Johnson').contains('like').click()
+      cy.contains('Awesome blog by Jared Johnson').contains('likes: 1')
     })
   })
 })
